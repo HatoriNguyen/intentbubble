@@ -30,7 +30,7 @@
    * Phân tích chi tiết từng khối, kinh tế đơn vị (Unit Economics), chi phí thu hút khách hàng (CAC ~3,500đ), cơ cấu chi phí máy chủ và nguồn thu Freemium (29,000đ/tháng).
 
 4. **[slide_deck_cp3.md](file:///C:/Users/Hoang%20Thong/.gemini/antigravity-ide/scratch/intent-bubble-cp3/slide_deck_cp3.md)**:
-   * **Dàn ý 12 Slide chuẩn 15 phút thuyết trình** theo đúng thứ tự điểm số Rubric của cô Thanh.
+   * **Dàn ý 12 Slide chuẩn 15 phút thuyết trình** theo đúng thứ tự điểm số Rubric của thầy Thanh.
    * Không tạo slide thừa cho Mục 6 (Live Demo) theo đúng lệnh cấm của giảng viên.
    * Đầy đủ kịch bản thuyết trình song ngữ (Speaker Script) có ghi rõ từng phút từng giây cho các thành viên.
    * Bản tuyên bố bắt buộc về việc sử dụng AI (AI Disclosure Statement) và bộ câu hỏi phản biện hóc búa (Q&A Defense Guide).
