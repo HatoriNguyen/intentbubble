@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intent Bubble — Academic Intent Discovery Layer (EXE101 CP3 Live MVP)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .bubble-pulse { animation: pulse-ring 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.02); opacity: 0.92; box-shadow: 0 0 25px rgba(99, 102, 241, 0.35); }
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 9999px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.7); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- Top Academic Demo Header for Lecturer Thanhntl2 & Testers -->
+  <header class="bg-slate-900/90 border-b border-indigo-950/80 px-4 lg:px-8 py-3 sticky top-0 z-50 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 shadow-lg">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center font-black text-slate-950 text-base shadow-md shadow-indigo-500/20">
+        IB
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-extrabold text-sm tracking-tight text-white">INTENT BUBBLE</span>
+          <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-semibold text-[11px] border border-emerald-500/30">EXE101 • CP3 Live MVP</span>
+        </div>
+        <p class="text-[11px] text-slate-400">Tự động lưu ý định trên Bubble & Ghép nối đối tác phù hợp qua Zalo</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2.5">
+      <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-slate-300 font-medium">Campus Node:</span>
+        <span class="text-indigo-400 font-semibold font-mono">FPT University HCMC</span>
+      </div>
+      <button onclick="openPriceModal()" class="px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition">
+        📊 Van Westendorp Study
+      </button>
+      <button onclick="resetDemo()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-medium transition">
+        🔄 Reset Demo
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- Left Column: CP2 Pains to CP3 Solutions Audit Checklist -->
+    <aside class="lg:col-span-5 bg-slate-900/70 border border-slate-800/90 rounded-3xl p-6 space-y-5 shadow-xl">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-400">Mục tiêu đề tài & Cơ chế hệ thống</h2>
+          <p class="text-[11px] text-slate-400 mt-0.5">Khảo sát thực địa (n = 104) $\rightarrow$ Kiến trúc MVP hoàn chỉnh</p>
+        </div>
+        <span class="text-[10px] bg-indigo-500/20 text-indigo-300 font-bold px-2 py-1 rounded-md border border-indigo-500/30">Rubric 2.2</span>
+      </div>
+
+      <!-- Core Objective Description Banner -->
+      <div class="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 text-xs space-y-1.5">
+        <div class="font-bold text-indigo-200 uppercase tracking-wide flex items-center gap-1.5">
+          <span class="text-base">🎯</span> Mục tiêu đề tài Intent Bubble
+        </div>
+        <p class="text-[11px] text-slate-300 leading-relaxed">
+          Người dùng nhập <strong>Họ tên</strong>, <strong>Email trường</strong> và <strong>Số điện thoại Zalo</strong> $\rightarrow$ Hệ thống tự động lưu trữ và treo <strong>Ý định học tập (Intent)</strong> trên <strong>Persistent Bubble 24/7</strong> cho đến khi AI tự động tìm thấy đối tác và thực hiện match, sau đó kết nối trực tiếp qua Zalo.
+        </p>
+      </div>
+
+      <!-- Problem-Solution Pair Cards -->
+      <div class="space-y-3">
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 hover:border-slate-700 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span> 1. Lưu trữ danh tính & SĐT Zalo
+            </span>
+            <span class="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 px-1.5 py-0.5 rounded">Tự động</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+            Họ tên và Số điện thoại Zalo được lưu trữ an toàn (bảo vệ theo Luật 91/2025/QH15). SĐT chỉ mở khóa khi 2 bạn cùng bấm đồng thuận ghép nối.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 hover:border-slate-700 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span> 2. Ý định lưu cố định trên Bubble
+            </span>
+            <span class="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 px-1.5 py-0.5 rounded">24/7 Active</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+            Nhu cầu không bao giờ bị trôi bài như Facebook Group. Bubble giữ ý định hoạt động 3–7 ngày (hoặc đến khi hủy) để đón đầu người mới.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 hover:border-slate-700 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-sky-500"></span> 3. AI tự động quét nền & Match
+            </span>
+            <span class="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 px-1.5 py-0.5 rounded">Autonomous</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+            Thuật toán so sánh ngữ nghĩa (Cosine Similarity) chạy nền liên tục. Sinh viên không cần online canh tin nhắn, AI sẽ tự động match khi phát hiện đối tác tương thích.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 hover:border-slate-700 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-purple-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-500"></span> 4. Chuyển tiếp Zalo trực tiếp
+            </span>
+            <span class="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 px-1.5 py-0.5 rounded">Zalo Handoff</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+            Hiển thị ngay SĐT Zalo của bạn cùng nhóm + Nút mở Zalo một chạm + Tin nhắn mở đầu tạo sẵn để kết bạn và phân chia công việc lập tức.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Tester Presets / Scenarios -->
+      <div class="pt-2 border-t border-slate-800 space-y-2">
+        <label class="text-xs font-bold text-slate-300 block">⚡ Thử nhanh các kịch bản thực tế (Bấm để thử):</label>
+        <div class="grid grid-cols-1 gap-2">
+          <button onclick="loadScenario('swp')" class="text-left text-xs p-3 rounded-xl bg-slate-950 hover:bg-indigo-950/40 border border-slate-800 hover:border-indigo-600/50 transition">
+            <div class="font-bold text-indigo-300">🎯 Kịch bản A: Đồ án tốt nghiệp (SWP391)</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">Khớp cao: Dân Backend tìm người gánh Frontend ReactJS & UI/UX Figma.</div>
+          </button>
+          <button onclick="loadScenario('cry')" class="text-left text-xs p-3 rounded-xl bg-slate-950 hover:bg-indigo-950/40 border border-slate-800 hover:border-indigo-600/50 transition">
+            <div class="font-bold text-cyan-300">🔐 Kịch bản B: Ôn thi ngữ nghĩa (CRY303C)</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">Suy luận ngữ nghĩa: "RSA tối nay" tự khớp với "Public Key Cryptography".</div>
+          </button>
+          <button onclick="loadScenario('niche')" class="text-left text-xs p-3 rounded-xl bg-slate-950 hover:bg-amber-950/30 border border-slate-800 hover:border-amber-600/50 transition">
+            <div class="font-bold text-amber-300">⏳ Kịch bản C: Kỹ năng hiếm (Chưa có người online)</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">Kích hoạt Bubble treo 7 ngày: AI quét nền và gửi thông báo khi có bạn xuất hiện.</div>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Column: Interactive MVP Mobile-First Prototype Frame -->
+    <section class="lg:col-span-7 flex justify-center">
+      <div class="w-full max-w-md bg-slate-900 border-4 border-slate-800/90 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col min-h-[750px] relative">
+
+        <!-- Top Phone Bar -->
+        <div class="bg-slate-950 px-6 pt-4 pb-3 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            <span class="text-xs font-bold text-white">Intent Bubble</span>
+            <span id="badge-campus" class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono">@fpt.edu.vn</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono">MVP Pilot v1.0</span>
+        </div>
+
+        <!-- 4 Steps Interactive Tabs -->
+        <nav class="grid grid-cols-4 bg-slate-950/70 border-b border-slate-800 text-[11px] font-semibold text-center">
+          <button onclick="switchScreen('auth')" id="nav-auth" class="py-2.5 border-b-2 border-indigo-500 text-indigo-400 transition">1. Thông tin</button>
+          <button onclick="switchScreen('intent')" id="nav-intent" class="py-2.5 border-b-2 border-transparent text-slate-400 transition">2. Ý định</button>
+          <button onclick="switchScreen('matches')" id="nav-matches" class="py-2.5 border-b-2 border-transparent text-slate-400 transition">3. Ghép nối</button>
+          <button onclick="switchScreen('bubble')" id="nav-bubble" class="py-2.5 border-b-2 border-transparent text-slate-400 transition">4. Zalo</button>
+        </nav>
+
+        <!-- SCREEN 1: VERIFICATION & PEER IDENTITY + ZALO NUMBER STORAGE -->
+        <div id="screen-auth" class="p-6 flex-1 flex flex-col justify-between space-y-4">
+          <div class="space-y-4">
+            <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30">
+              <div class="text-xs font-bold text-indigo-300 uppercase tracking-wide">Cổng xác thực & Lưu trữ danh tính</div>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                Hệ thống tự động lưu trữ <strong>Họ tên</strong>, <strong>Email trường</strong> và <strong>Số điện thoại Zalo</strong> để làm cầu nối liên hệ khi AI ghép thành công.
+              </p>
+            </div>
+
+            <div class="space-y-3">
+              <div>
+                <label class="text-xs font-semibold text-slate-300 block mb-1">Email sinh viên (@fpt.edu.vn / @edu.vn)</label>
+                <input id="input-email" type="email" value="minhlhse180999@fpt.edu.vn" oninput="handleEmailInput()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono" />
+                <p id="email-hint" class="text-[11px] text-emerald-400 mt-1">✓ Đã xác thực sinh viên Đại học FPT TP.HCM</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2.5">
+                <div>
+                  <label class="text-xs font-semibold text-slate-300 block mb-1">Họ và tên</label>
+                  <input id="input-name" type="text" value="Lê Hữu Minh" oninput="updateStorageBadge()" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500" />
+                </div>
+                <div>
+                  <label class="text-xs font-semibold text-slate-300 block mb-1">Số điện thoại Zalo</label>
+                  <input id="input-zalo" type="tel" value="0909 888 999" oninput="updateStorageBadge()" placeholder="09xx xxx xxx" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono" />
+                </div>
+              </div>
+
+              <!-- Real-time Storage Indicator -->
+              <div id="storage-status-card" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-300 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Tự động lưu: <strong>Lê Hữu Minh</strong> • Zalo: <span class="font-mono">0909 888 999</span></span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2.5">
+                <div>
+                  <label class="text-xs font-semibold text-slate-300 block mb-1">Chuyên ngành & Khóa</label>
+                  <select id="input-major" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white">
+                    <option selected>Kỹ thuật phần mềm (SE) • K18</option>
+                    <option>An toàn thông tin (IA) • K18</option>
+                    <option>Digital Marketing (DM) • K18</option>
+                    <option>Thiết kế đồ họa (GD) • K18</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-xs font-semibold text-slate-300 block mb-1">Ca học rảnh</label>
+                  <select id="input-shift" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white">
+                    <option selected>Slot 3-4 (Chiều T3/T5)</option>
+                    <option>Slot 1-2 (Sáng T2/T4/T6)</option>
+                    <option>Linh hoạt các buổi tối</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-slate-400 flex items-start gap-2">
+                <input type="checkbox" checked class="mt-0.5 accent-indigo-500" />
+                <span>
+                  <strong>Bảo mật Zalo (Luật 91/2025/QH15):</strong> Số điện thoại Zalo được mã hóa an toàn, chỉ hiển thị cho đối tác khi cả hai bạn cùng xác nhận ghép nối.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="switchScreen('intent')" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-indigo-600/30 transition">
+            Lưu thông tin & Đăng ý định lên Bubble →
+          </button>
+        </div>
+
+        <!-- SCREEN 2: POST ACADEMIC INTENT & ENTITY EXTRACTION -->
+        <div id="screen-intent" class="p-6 flex-1 hidden flex-col justify-between space-y-4">
+          <div class="space-y-4">
+            <div>
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-white">Tạo Intent Bubble của bạn</h3>
+                <span class="text-[10px] text-indigo-400 font-mono">AI Vector Engine</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">Ý định này sẽ được lưu giữ liên tục trên Bubble 24/7 cho đến khi AI tự động tìm thấy và match đối tác:</p>
+            </div>
+
+            <!-- Quick Template Chips -->
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="loadScenario('swp')" class="text-[11px] px-2.5 py-1 rounded-full bg-slate-800 hover:bg-indigo-900/40 text-indigo-300 border border-slate-700 transition">+ SWP391 Capstone</button>
+              <button onclick="loadScenario('cry')" class="text-[11px] px-2.5 py-1 rounded-full bg-slate-800 hover:bg-indigo-900/40 text-cyan-300 border border-slate-700 transition">+ CRY303C Ôn thi RSA</button>
+              <button onclick="loadScenario('exe')" class="text-[11px] px-2.5 py-1 rounded-full bg-slate-800 hover:bg-indigo-900/40 text-purple-300 border border-slate-700 transition">+ EXE101 Tìm bạn Pitch</button>
+            </div>
+
+            <!-- Intent Input Area -->
+            <div class="relative">
+              <textarea id="intent-textarea" rows="4" oninput="parseIntentRealtime()" class="w-full p-3.5 rounded-2xl bg-slate-950 border border-indigo-500/60 text-xs text-white leading-relaxed focus:outline-none focus:ring-1 focus:ring-indigo-500 custom-scrollbar"></textarea>
+              <span class="absolute bottom-2.5 right-3 text-[10px] text-slate-500 font-mono">Tự động lưu ý định</span>
+            </div>
+
+            <!-- Live Extracted Entities Display -->
+            <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-bold text-emerald-400 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  AI phân tích ý định tức thì
+                </span>
+                <span class="text-slate-500 font-mono text-[10px]">Độ trễ: 35ms</span>
+              </div>
+              <div id="intent-tags-container" class="flex flex-wrap gap-1.5 text-[11px]"></div>
+            </div>
+
+            <!-- Persistent Bubble Config (Directly fulfilling user requirement) -->
+            <div class="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-800/60 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-indigo-200">🫧 Persistent Intent Bubble (Lưu ý định 24/7)</div>
+                  <div class="text-[11px] text-slate-400">Treo ý định trên Bubble và để AI tự động tìm kiếm đến khi match thành công</div>
+                </div>
+                <input id="check-persistent" type="checkbox" checked class="w-4 h-4 accent-indigo-500 cursor-pointer" />
+              </div>
+              <div class="flex items-center justify-between text-xs pt-1 border-t border-indigo-900/50">
+                <span class="text-slate-300">Thời gian duy trì Bubble:</span>
+                <select id="select-duration" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-indigo-300 focus:outline-none">
+                  <option value="Đến khi tìm thấy người match" selected>Đến khi tìm thấy người match (Khuyên dùng)</option>
+                  <option value="3 Ngày">3 Ngày (Ôn thi cấp tốc)</option>
+                  <option value="5 Ngày">5 Ngày (Đồ án môn học)</option>
+                  <option value="7 Ngày">7 Ngày (Capstone / Hackathon)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="executeMatchAction()" class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-indigo-500/20 transition">
+            Lưu Intent lên Bubble & Chạy AI Ghép Nối →
+          </button>
+        </div>
+
+        <!-- SCREEN 3: MATCH RESULTS WITH EXPLAINABLE AI & MANUAL FALLBACK -->
+        <div id="screen-matches" class="p-6 flex-1 hidden flex-col justify-between space-y-3">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-white">Kết quả ghép nối AI</h3>
+                <p class="text-[11px] text-slate-400">Xếp hạng theo độ tương thích Cosine & Điểm uy tín</p>
+              </div>
+              <button onclick="toggleFallbackFilter()" class="text-[11px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 transition">
+                ⚙️ Lọc kỹ năng
+              </button>
+            </div>
+
+            <!-- Manual Filter Strip -->
+            <div id="filter-bar" class="hidden p-2.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-wrap gap-1.5 text-[11px]">
+              <span class="text-slate-400 self-center mr-1">Bộ lọc:</span>
+              <button onclick="filterMatches('all')" class="px-2 py-0.5 rounded bg-indigo-600 text-white font-medium">Tất cả</button>
+              <button onclick="filterMatches('Frontend')" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">Frontend</button>
+              <button onclick="filterMatches('Crypto')" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">An toàn TT</button>
+              <button onclick="filterMatches('Marketing')" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:bg-slate-700">Marketing</button>
+            </div>
+
+            <!-- Matches List Container -->
+            <div id="matches-card-list" class="space-y-3 max-h-[440px] overflow-y-auto pr-1 custom-scrollbar"></div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+            <button onclick="switchScreen('intent')" class="text-slate-400 hover:text-white transition">← Sửa ý định</button>
+            <button onclick="viewPersistentBubbleState()" class="text-indigo-400 hover:text-indigo-300 font-semibold transition">Giữ Bubble chạy nền 24/7 →</button>
+          </div>
+        </div>
+
+        <!-- SCREEN 4: CONNECT & ZALO HANDOFF + SĐT ZALO & PEER REVIEW LOOP -->
+        <div id="screen-bubble" class="p-6 flex-1 hidden flex-col justify-between space-y-4">
+          <div id="handoff-content" class="space-y-4"></div>
+
+          <!-- Post-Session Peer Review (Anti Free-Rider Loop) -->
+          <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5 shadow-lg">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-300">🛡️ Đánh giá đồng đội sau khi liên hệ Zalo</span>
+              <span class="text-[10px] text-slate-500 font-mono">Chống Free-rider</span>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+              Sau khi kết bạn Zalo và làm việc chung, gửi đánh giá 10 giây để xây dựng hồ sơ tín nhiệm học thuật cho bạn:
+            </p>
+            <div class="flex items-center justify-between pt-1">
+              <div class="flex gap-1.5 text-xs">
+                <button onclick="recordPeerRating(5)" class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold transition">★ 5.0 Uy tín</button>
+                <button onclick="recordPeerRating(4)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">★ 4.0 Tốt</button>
+                <button onclick="recordPeerRating(1)" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 transition">🚩 Ghost/Bỏ nhóm</button>
+              </div>
+              <span id="rating-feedback" class="text-[11px] font-medium text-emerald-400"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Van Westendorp Price Study Modal -->
+  <div id="price-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-6 space-y-5 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div>
+          <h3 class="text-sm font-bold text-white">Nghiên cứu độ nhạy giá Van Westendorp</h3>
+          <p class="text-xs text-slate-400">Xác thực mức giá cho gói Intent Bubble Plus (Mục 1.5.3 Rubric)</p>
+        </div>
+        <button onclick="closePriceModal()" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-sm">✕</button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 text-xs">
+        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <div class="text-slate-400 text-[11px]">Điểm bắt đầu nghi ngờ rẻ (PMC):</div>
+          <div class="text-emerald-400 font-extrabold text-sm mt-0.5">15.000 VNĐ / tháng</div>
+          <div class="text-[10px] text-slate-500 mt-1">Dưới mức này, sinh viên sợ bị lộ SĐT Zalo hoặc dịch vụ ảo.</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <div class="text-slate-400 text-[11px]">Điểm bắt đầu thấy đắt (PME):</div>
+          <div class="text-rose-400 font-extrabold text-sm mt-0.5">49.000 VNĐ / tháng</div>
+          <div class="text-[10px] text-slate-500 mt-1">Trên mức này, tỷ lệ phản đối vượt 70%.</div>
+        </div>
+        <div class="p-3 rounded-xl bg-indigo-950/40 border border-indigo-500/30 col-span-2">
+          <div class="flex items-center justify-between">
+            <span class="text-indigo-300 font-bold">Điểm giá tối ưu (OPP):</span>
+            <span class="text-white font-extrabold text-sm">29.000 VNĐ / tháng</span>
+          </div>
+          <p class="text-[11px] text-slate-300 mt-1">
+            Giao điểm của đường Quá Rẻ và Quá Đắt. Vừa vặn với túi tiền sinh viên FPT (tương đương 1 ly trà sữa/tháng).
+          </p>
+          <div class="mt-2 text-[10px] text-indigo-400">
+            ✓ Vùng giá chấp nhận được: <strong>15.000 VNĐ – 49.000 VNĐ / tháng</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-300 space-y-1">
+        <div class="font-bold text-white">Đặc quyền gói Intent Bubble Plus (29k/tháng):</div>
+        <div>• <strong>Miễn phí 100%:</strong> Lưu trữ danh tính, tạo 1 Bubble tìm kiếm đến khi match + Kết nối Zalo.</div>
+        <div>• <strong>Gói Plus (29k):</strong> Bật đồng thời 3 Bubble dài hạn + Ghim ưu tiên tìm gấp 48h + Huy hiệu tài khoản uy tín.</div>
+      </div>
+
+      <button onclick="closePriceModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition">
+        Đóng cửa sổ
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const DATA_SCENARIOS = {
+      swp: {
+        prompt: "Cần tìm đồng đội giỏi ReactJS Frontend và thiết kế Figma UI/UX cho đồ án tốt nghiệp SWP391. Mục tiêu điểm 8.5+, rảnh các buổi chiều thứ 3 và thứ 5.",
+        tags: ["Môn học: SWP391", "Kỹ năng: ReactJS & Figma", "Mục tiêu: Điểm 8.5+ Capstone", "Thời gian: Chiều Thứ 3 / Thứ 5"],
+        matches: [
+          {
+            name: "Trần Thảo Vy",
+            email: "vyttse182104@fpt.edu.vn",
+            zaloPhone: "0909 123 456",
+            major: "Kỹ thuật phần mềm (SE) • K18",
+            shift: "Slot 3-4 (Thứ 3 / Thứ 5)",
+            similarity: 94,
+            peerScore: "4.9 ★ (8 đồ án đã hoàn thành)",
+            portfolio: "github.com/thaovy-ui",
+            category: "Frontend",
+            intentText: "Tìm bạn Backend/Security làm chung SWP391. Mình phụ trách toàn bộ giao diện React/Tailwind và prototype Figma, cam kết làm việc nghiêm túc, không bao giờ trễ deadline.",
+            rationale: "Độ tương đồng ngữ nghĩa 94%: Khớp tuyệt đối môn SWP391. Bạn cần Frontend/UI còn Vy cần Backend/Security (bổ sung kỹ năng chéo hoàn hảo), cùng chung ca học chiều.",
+            zalo: "https://zalo.me/0909123456"
+          },
+          {
+            name: "Đỗ Nhất Huy",
+            email: "dnhuy207@fpt.edu.vn",
+            zaloPhone: "0909 654 321",
+            major: "Kỹ thuật phần mềm (SE) • K18",
+            shift: "Linh hoạt các buổi tối",
+            similarity: 86,
+            peerScore: "4.8 ★ (5 đồ án đã hoàn thành)",
+            portfolio: "behance.net/nhathuy-fpt",
+            category: "Frontend",
+            intentText: "Cần nhóm IT làm đồ án phần mềm. Có thể gánh phần thiết kế UI/UX Figma và CSS responsive sạch đẹp.",
+            rationale: "Độ tương đồng ngữ nghĩa 86%: Trùng khớp cao về năng lực Design System và CSS, tuy nhiên thời gian rảnh thiên về buổi tối thay vì chiều.",
+            zalo: "https://zalo.me/0909654321"
+          }
+        ]
+      },
+      cry: {
+        prompt: "Mình muốn tìm người cùng ôn tập RSA và giải đề thực hành tối nay (Need someone to revise RSA tonight).",
+        tags: ["Chủ đề: Mã hóa RSA / Khóa bất đối xứng", "Môn học suy luận: CRY303C", "Mục đích: Ôn thi thực hành", "Thời gian: Tối nay (20:00)"],
+        matches: [
+          {
+            name: "Phạm Minh Tuấn",
+            email: "tuanpmse180595@fpt.edu.vn",
+            zaloPhone: "0918 222 333",
+            major: "An toàn thông tin (IA) • K18",
+            shift: "Online tối nay từ 20:00",
+            similarity: 92,
+            peerScore: "5.0 ★ (11 lượt đánh giá)",
+            portfolio: "github.com/minhtuan-sec",
+            category: "Crypto",
+            intentText: "Có bạn nào học CRY303C muốn cùng nhau ôn tập Public Key Cryptography và Diffie-Hellman tối nay không?",
+            rationale: "Khớp ngữ nghĩa 92% (Không cần trùng từ khóa chính xác): AI tự động ánh xạ khái niệm 'RSA' sang môn học 'CRY303C Public Key Cryptography' của Tuấn, cả hai cùng rảnh tối nay.",
+            zalo: "https://zalo.me/0918222333"
+          }
+        ]
+      },
+      exe: {
+        prompt: "Cần một bạn khối ngành Kinh tế / Digital Marketing cùng lập mô hình tài chính và chuẩn bị slide pitch deck cho Checkpoint EXE101 tuần này.",
+        tags: ["Môn học: EXE101", "Kỹ năng: Financial Model & Pitch Deck", "Khối ngành: Kinh tế / Marketing", "Độ khẩn cấp: Tuần này"],
+        matches: [
+          {
+            name: "Đỗ Thị Ngọc Lan",
+            email: "landtnss181154@fpt.edu.vn",
+            zaloPhone: "0988 777 666",
+            major: "Digital Marketing • K18",
+            shift: "Slot 1-2 (Thứ 2 / 4 / 6)",
+            similarity: 91,
+            peerScore: "4.9 ★ (7 lượt đánh giá)",
+            portfolio: "linkedin.com/in/ngoclan-fpt",
+            category: "Marketing",
+            intentText: "Sinh viên Marketing năm cuối tìm nhóm kỹ thuật EXE101 để đồng hành mảng chiến lược GTM, phân tích khảo sát khách hàng và thuyết trình.",
+            rationale: "Độ tương đồng 91%: Ghép nối trực tiếp môn EXE101, bù trừ kỹ năng giữa dân kỹ thuật (làm MVP) và dân kinh tế (làm Pitch Deck & Tài chính).",
+            zalo: "https://zalo.me/0988777666"
+          }
+        ]
+      },
+      niche: {
+        prompt: "Cần tìm một bạn có kinh nghiệm viết Embedded Kernel bằng Rust trên bo mạch FPGA RISC-V để làm bài nghiên cứu phần cứng cuối tuần.",
+        tags: ["Chủ đề: Rust Embedded RISC-V FPGA", "Hoạt động: Nghiên cứu khoa học", "Độ hiếm: Kỹ năng chuyên sâu", "Hàng đợi: Giữ Bubble đến khi tìm thấy"],
+        matches: []
+      }
+    };
+
+    let activeScenarioKey = "swp";
+    let activeSelectedMatch = DATA_SCENARIOS.swp.matches[0];
+
+    function switchScreen(screenId) {
+      ["auth", "intent", "matches", "bubble"].forEach(id => {
+        const el = document.getElementById("screen-" + id);
+        const nav = document.getElementById("nav-" + id);
+        el.classList.add("hidden");
+        el.classList.remove("flex");
+        nav.classList.remove("border-indigo-500", "text-indigo-400");
+        nav.classList.add("border-transparent", "text-slate-400");
+      });
+      const activeEl = document.getElementById("screen-" + screenId);
+      const activeNav = document.getElementById("nav-" + screenId);
+      activeEl.classList.remove("hidden");
+      activeEl.classList.add("flex");
+      activeNav.classList.remove("border-transparent", "text-slate-400");
+      activeNav.classList.add("border-indigo-500", "text-indigo-400");
+    }
+
+    function updateStorageBadge() {
+      const name = document.getElementById("input-name").value.trim() || "Sinh viên";
+      const zalo = document.getElementById("input-zalo").value.trim() || "Chưa nhập";
+      const badge = document.getElementById("storage-status-card");
+      badge.innerHTML = `
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Tự động lưu: <strong>${name}</strong> • Zalo: <span class="font-mono">${zalo}</span></span>
+      `;
+    }
+
+    function handleEmailInput() {
+      const email = document.getElementById("input-email").value.trim();
+      const hint = document.getElementById("email-hint");
+      const badge = document.getElementById("badge-campus");
+      if (email.endsWith(".edu.vn")) {
+        hint.textContent = "✓ Danh tính sinh viên được xác thực (" + email.split("@")[1] + ")";
+        hint.className = "text-[11px] text-emerald-400 mt-1 font-mono";
+        badge.textContent = "@" + email.split("@")[1];
+      } else {
+        hint.textContent = "⚠️ Chỉ chấp nhận email có đuôi @fpt.edu.vn hoặc @edu.vn";
+        hint.className = "text-[11px] text-amber-400 mt-1 font-mono";
+      }
+    }
+
+    function parseIntentRealtime() {
+      const val = document.getElementById("intent-textarea").value;
+      const container = document.getElementById("intent-tags-container");
+      const tags = [];
+      if (/swp|đồ án|capstone/i.test(val)) tags.push("Môn học: SWP391 / Đồ án tốt nghiệp");
+      if (/react|frontend|figma|ui/i.test(val)) tags.push("Kỹ năng: Frontend ReactJS & UI/UX");
+      if (/rsa|cry|mã hóa|crypto/i.test(val)) tags.push("Khái niệm: CRY303C (Public-Key Cryptography)");
+      if (/exe|pitch|marketing|tài chính/i.test(val)) tags.push("Môn học: EXE101 Khởi nghiệp");
+      if (/rust|fpga|risc/i.test(val)) tags.push("Kỹ năng hiếm: Rust Embedded & RISC-V");
+      if (/tối nay|chiều|thứ 3|thứ 5|tuần này/i.test(val)) tags.push("Thời gian: Tự động trích xuất lịch rảnh");
+      if (tags.length === 0) tags.push("Ý định: Hợp tác học tập", "Cơ chế: Lưu Bubble & Tìm kiếm 24/7");
+
+      container.innerHTML = tags.map(t =>
+        `<span class="px-2.5 py-1 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[11px] font-medium">${t}</span>`
+      ).join("");
+    }
+
+    function loadScenario(key) {
+      activeScenarioKey = key;
+      const data = DATA_SCENARIOS[key];
+      document.getElementById("intent-textarea").value = data.prompt;
+      const container = document.getElementById("intent-tags-container");
+      container.innerHTML = data.tags.map(t =>
+        `<span class="px-2.5 py-1 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[11px] font-medium">${t}</span>`
+      ).join("");
+      switchScreen("intent");
+    }
+
+    function executeMatchAction() {
+      renderMatchCards(DATA_SCENARIOS[activeScenarioKey].matches);
+      if (DATA_SCENARIOS[activeScenarioKey].matches.length === 0) {
+        viewPersistentBubbleState();
+      } else {
+        switchScreen("matches");
+      }
+    }
+
+    function renderMatchCards(list) {
+      const container = document.getElementById("matches-card-list");
+      if (!list || list.length === 0) {
+        container.innerHTML = `
+          <div class="p-5 rounded-2xl bg-slate-950 border border-amber-500/40 text-center space-y-3">
+            <div class="text-3xl">🫧</div>
+            <div class="text-xs font-bold text-amber-300 uppercase tracking-wide">Chưa có bạn nào khớp ngay lúc này</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Ý định của bạn đang được <strong>lưu giữ an toàn trên Bubble</strong>. AI sẽ tự động chạy nền 24/7 và thông báo ngay khi có bạn mới xuất hiện.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map((item, idx) => `
+        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 hover:border-indigo-500/60 transition space-y-3 shadow-md">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-white">${item.name}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-mono">@fpt.edu.vn ✓</span>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">${item.major} • <span class="text-indigo-300">${item.shift}</span></div>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="text-xs font-extrabold text-indigo-400 font-mono">${item.similarity}% Match</div>
+              <div class="text-[10px] text-amber-300 font-medium">${item.peerScore}</div>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800/80 text-xs text-slate-300 italic">
+            "${item.intentText}"
+          </div>
+
+          <div class="p-3 rounded-xl bg-indigo-950/40 border border-indigo-800/60 text-xs text-indigo-200 leading-relaxed">
+            <strong class="text-indigo-300">🤖 Lý do AI ghép nối:</strong> ${item.rationale}
+          </div>
+
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-[11px] text-slate-400">🔗 Portfolio: <u class="text-slate-300 font-mono">${item.portfolio}</u></span>
+            <div class="flex gap-2">
+              <button onclick="reportMismatch('${item.name}')" class="px-2 py-1 rounded-lg bg-slate-900 hover:bg-rose-950 text-slate-400 hover:text-rose-300 border border-slate-800 text-[11px] transition">🚩 Báo lệch</button>
+              <button onclick="proceedToHandoff(${idx})" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-md transition">Kết nối & Lấy SĐT Zalo →</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function toggleFallbackFilter() {
+      document.getElementById("filter-bar").classList.toggle("hidden");
+    }
+
+    function filterMatches(category) {
+      const allMatches = [
+        ...DATA_SCENARIOS.swp.matches,
+        ...DATA_SCENARIOS.cry.matches,
+        ...DATA_SCENARIOS.exe.matches
+      ];
+      const filtered = category === "all" ? allMatches : allMatches.filter(m => m.category === category);
+      renderMatchCards(filtered);
+    }
+
+    function reportMismatch(name) {
+      alert("Đã ghi nhận phản hồi lệch tiêu chí với " + name + ". Hệ thống tự động hiệu chỉnh vector trọng số và mở bộ lọc kỹ năng thủ công.");
+      document.getElementById("filter-bar").classList.remove("hidden");
+    }
+
+    function proceedToHandoff(idx) {
+      const list = DATA_SCENARIOS[activeScenarioKey].matches;
+      activeSelectedMatch = list[idx] || DATA_SCENARIOS.swp.matches[0];
+      const container = document.getElementById("handoff-content");
+      container.innerHTML = `
+        <div class="p-5 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 space-y-3.5 shadow-lg">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">✓ Đã ghép nối & Mở khóa SĐT Zalo</span>
+            <span class="text-[10px] text-slate-400 font-mono">Double Opt-In</span>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-white">Đã kết nối với ${activeSelectedMatch.name}</div>
+            <div class="text-xs text-slate-400">${activeSelectedMatch.email} • ${activeSelectedMatch.major}</div>
+          </div>
+
+          <!-- Unlocked Zalo Phone Number Box -->
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/50 flex items-center justify-between">
+            <div>
+              <div class="text-[10px] text-slate-400 font-medium">Số điện thoại Zalo của đối tác:</div>
+              <div class="text-sm font-black text-emerald-400 font-mono tracking-wider">${activeSelectedMatch.zaloPhone}</div>
+            </div>
+            <button onclick="copyZaloNumber('${activeSelectedMatch.zaloPhone}')" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-medium border border-emerald-500/40 transition">
+              📋 Sao chép SĐT
+            </button>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 space-y-1">
+            <div class="font-bold text-indigo-300">Tin nhắn mở đầu tự động (Icebreaker):</div>
+            <p class="text-[11px] text-slate-400 italic">"Chào ${activeSelectedMatch.name.split(' ').pop()}, Intent Bubble vừa ghép nối chúng mình (${activeSelectedMatch.similarity}% phù hợp) cho môn ${DATA_SCENARIOS[activeScenarioKey].tags[0]}. Mình vừa lấy số Zalo của bạn trên app, chúng mình lập nhóm nhé!"</p>
+          </div>
+          <div class="grid grid-cols-2 gap-2.5 pt-1">
+            <a href="${activeSelectedMatch.zalo}" target="_blank" class="py-2.5 px-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs text-center shadow-md transition">
+              💬 Mở Zalo trò chuyện ngay
+            </a>
+            <button onclick="viewPersistentBubbleState()" class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs text-center border border-slate-700 transition">
+              🫧 Xem trạng thái Bubble
+            </button>
+          </div>
+        </div>
+      `;
+      switchScreen("bubble");
+    }
+
+    function copyZaloNumber(num) {
+      navigator.clipboard.writeText(num);
+      alert("Đã sao chép số Zalo: " + num);
+    }
+
+    function viewPersistentBubbleState() {
+      const duration = document.getElementById("select-duration").value;
+      const prompt = document.getElementById("intent-textarea").value;
+      const name = document.getElementById("input-name").value.trim() || "Lê Hữu Minh";
+      const zalo = document.getElementById("input-zalo").value.trim() || "0909 888 999";
+      const container = document.getElementById("handoff-content");
+      container.innerHTML = `
+        <div class="p-5 rounded-2xl bg-indigo-950/40 border border-indigo-500/50 space-y-3.5 bubble-pulse shadow-xl">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-300">🫧 Persistent Intent Bubble Đang Lưu Trữ 24/7</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 font-bold font-mono">${duration}</span>
+          </div>
+          <div class="text-[11px] text-slate-300 bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-1">
+            <div>• <strong>Người tạo:</strong> ${name} (SĐT Zalo: <span class="font-mono text-emerald-400">${zalo}</span>)</div>
+            <div>• <strong>Ý định đang lưu trên Bubble:</strong> <span class="italic text-slate-200">"${prompt}"</span></div>
+            <div>• <strong>Trạng thái AI:</strong> Đang quét nền 24/7 trên mạng lưới sinh viên FPT. Tự động match ngay khi có bạn tương thích xuất hiện.</div>
+          </div>
+          <button onclick="simulateNewArrival()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-md transition">
+            🔔 Mô phỏng: AI tự động phát hiện người phù hợp (2 giờ sau)
+          </button>
+        </div>
+      `;
+      switchScreen("bubble");
+    }
+
+    function simulateNewArrival() {
+      activeScenarioKey = "swp";
+      proceedToHandoff(0);
+    }
+
+    function recordPeerRating(stars) {
+      const feedback = document.getElementById("rating-feedback");
+      if (stars >= 4) {
+        feedback.textContent = "✓ Đã lưu! +10 điểm uy tín cho hồ sơ.";
+        feedback.className = "text-[11px] font-medium text-emerald-400";
+      } else {
+        feedback.textContent = "🚩 Đã ghi nhận cảnh báo Free-rider vào hệ thống.";
+        feedback.className = "text-[11px] font-medium text-rose-400";
+      }
+    }
+
+    function openPriceModal() {
+      document.getElementById("price-modal").classList.remove("hidden");
+    }
+
+    function closePriceModal() {
+      document.getElementById("price-modal").classList.add("hidden");
+    }
+
+    function resetDemo() {
+      loadScenario("swp");
+      switchScreen("auth");
+      updateStorageBadge();
+    }
+
+    // Initial boot
+    loadScenario("swp");
+    switchScreen("auth");
+    updateStorageBadge();
+  </script>
+</body>
+</html>
