@@ -1,0 +1,37 @@
+{
+  "nextUserId": 3,
+  "users": [
+    {
+      "UserId": 101,
+      "FullName": "Lê Minh",
+      "Email": "minhlhse180999@fpt.edu.vn",
+      "PasswordHash": "$2b$12$3XcR3kgjQ79XGoZmn.wiL.dMC4.6AoULiG2CF9YFQ5SLW2l4XnJEi",
+      "Major": "Cybersecurity • Year 4",
+      "Bio": "Backend Node.js & Network Security (SWP391 / CRY303C)",
+      "Skills": "Node.js, Cybersecurity, SQL, RSA",
+      "CreatedAt": "2026-10-21T16:48:05.137Z"
+    },
+    {
+      "UserId": 102,
+      "FullName": "Trần Thảo Vy",
+      "Email": "vyttse182104@fpt.edu.vn",
+      "PasswordHash": "$2b$12$3XcR3kgjQ79XGoZmn.wiL.dMC4.6AoULiG2CF9YFQ5SLW2l4XnJEi",
+      "Major": "Software Engineering • Year 4",
+      "Bio": "Frontend ReactJS, Flutter & Figma UI/UX Designer",
+      "Skills": "Flutter, ReactJS, UI/UX, Figma",
+      "CreatedAt": "2026-10-21T16:48:05.138Z"
+    }
+  ],
+  "otps": [],
+  "requests": [
+    {
+      "RequestId": "a1111111-2222-4333-8444-555555555555",
+      "UserId": 102,
+      "Title": "Tìm đồng đội Backend/Security làm đồ án SWP391",
+      "Description": "Mình chuyên Frontend ReactJS, Flutter và Figma UI/UX. Cần tìm 1-2 bạn cứng Backend/Security cùng làm đồ án SWP391 mục tiêu 8.5+.",
+      "Tags": "[\"SWP391\",\"Flutter\",\"ReactJS\",\"UI/UX\"]",
+      "Schedule": "Slot 3-4 · Thứ 3 & Thứ 5",
+      "CreatedAt": "2026-10-21T16:48:05.138Z"
+    }
+  ]
+}
